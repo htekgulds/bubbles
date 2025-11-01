@@ -1,6 +1,6 @@
 package main
 
-import "bubbles/cmd"
+import "__name__/cmd"
 
 func main() {
 	cmd.Execute()

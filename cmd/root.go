@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cmdName string = "bubbles"
+var cmdName string = "__name__"
 var configFile string = "config.yaml"
 
 var cfgFile string
