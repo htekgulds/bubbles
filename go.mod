@@ -2,7 +2,10 @@ module bubbles
 
 go 1.25.3
 
-require github.com/spf13/cobra v1.10.1
+require (
+	github.com/joho/godotenv v1.5.1
+	github.com/spf13/cobra v1.10.1
+)
 
 require (
 	github.com/charmbracelet/colorprofile v0.3.2 // indirect
@@ -16,7 +19,6 @@ require (
 	github.com/charmbracelet/x/windows v0.2.2 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
