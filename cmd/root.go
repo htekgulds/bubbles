@@ -6,6 +6,8 @@ import (
 	"os"
 
 	"github.com/charmbracelet/fang"
+	"github.com/htekgulds/bubbles/cmd/spinners"
+	"github.com/htekgulds/bubbles/cmd/text"
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -36,6 +38,9 @@ func init() {
 
 	// Bind flag to viper key
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
+
+	text.Init(rootCmd)
+	spinners.Init(rootCmd)
 }
 
 func initConfig() {
