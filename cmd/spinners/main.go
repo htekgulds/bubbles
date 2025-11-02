@@ -1,4 +1,4 @@
-package cmd
+package spinners
 
 import (
 	"fmt"
@@ -108,6 +108,6 @@ var spinnerCmd = &cobra.Command{
 	},
 }
 
-func init() {
+func Init(rootCmd *cobra.Command) {
 	rootCmd.AddCommand(spinnerCmd)
 }
