@@ -7,7 +7,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	"github.com/htekgulds/bubbles/cmd/theme"
 	"github.com/spf13/cobra"
 )
 
@@ -19,30 +19,35 @@ type model struct {
 	err      error
 }
 
-func newSpinner(spinnerType spinner.Spinner, color string) spinner.Model {
-	if color == "" {
-		color = "205"
-	}
+var themeStyles = theme.New()
+
+func newSpinner(spinnerType spinner.Spinner) spinner.Model {
 	s := spinner.New()
 	s.Spinner = spinnerType
-	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color(color))
+	s.Style = themeStyles.TextBrand()
 	return s
 }
 
 func initialModel() model {
-	d := newSpinner(spinner.Dot, "205")
-	e := newSpinner(spinner.Ellipsis, "205")
-	g := newSpinner(spinner.Globe, "205")
-	h := newSpinner(spinner.Hamburger, "205")
-	j := newSpinner(spinner.Jump, "205")
-	l := newSpinner(spinner.Line, "205")
-	m := newSpinner(spinner.Moon, "205")
-	p := newSpinner(spinner.Pulse, "205")
-	mt := newSpinner(spinner.Meter, "205")
-	md := newSpinner(spinner.MiniDot, "205")
-	mn := newSpinner(spinner.Monkey, "205")
-	pt := newSpinner(spinner.Points, "205")
-	return model{spinners: []spinner.Model{d, e, g, h, j, l, m, p, mt, md, mn, pt}}
+	ss := []spinner.Spinner{
+		spinner.Dot,
+		spinner.Ellipsis,
+		spinner.Globe,
+		spinner.Hamburger,
+		spinner.Jump,
+		spinner.Line,
+		spinner.Moon,
+		spinner.Pulse,
+		spinner.Meter,
+		spinner.MiniDot,
+		spinner.Monkey,
+		spinner.Points,
+	}
+	m := make([]spinner.Model, len(ss))
+	for i, s := range ss {
+		m[i] = newSpinner(s)
+	}
+	return model{spinners: m}
 }
 
 func (m model) Init() tea.Cmd {

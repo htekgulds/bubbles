@@ -6,16 +6,17 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	"github.com/htekgulds/bubbles/cmd/theme"
 	"github.com/spf13/cobra"
 )
 
+var themeStyles = theme.New()
+
 var (
-	focusedStyle  = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
-	blurredStyle  = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
-	cursorStyle   = focusedStyle
-	focusedButton = focusedStyle.Render("[ Submit ]")
-	buttonStyle   = fmt.Sprintf("%s %s", focusedButton, blurredStyle.Render("enter"))
+	focusedStyle  = themeStyles.TextAccent()
+	cursorStyle   = themeStyles.TextBrand()
+	focusedButton = themeStyles.TextBrand().Render("[ Submit ]")
+	buttonStyle   = fmt.Sprintf("%s %s", focusedButton, themeStyles.TextAccent().Render("enter"))
 )
 
 type errMsg error
