@@ -2,81 +2,210 @@ package theme
 
 import (
 	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/log"
 )
 
-type Theme struct {
-	base       lipgloss.Style
-	border     lipgloss.TerminalColor
-	background lipgloss.TerminalColor
-	highlight  lipgloss.TerminalColor
-	brand      lipgloss.TerminalColor
-	error      lipgloss.TerminalColor
-	body       lipgloss.TerminalColor
-	accent     lipgloss.TerminalColor
-}
+// DaisyUI Dark Theme
 
-func New() Theme {
-	base := Theme{}
-	base.background = lipgloss.AdaptiveColor{Dark: "#000000", Light: "#FBFCFD"}
-	base.border = lipgloss.AdaptiveColor{Dark: "#3A3F42", Light: "#D7DBDF"}
-	base.body = lipgloss.AdaptiveColor{Dark: "#889096", Light: "#889096"}
-	base.accent = lipgloss.AdaptiveColor{Dark: "#FFFFFF", Light: "#11181C"}
-	base.brand = lipgloss.Color("#FF5C00")
-	base.error = lipgloss.Color("203")
-	base.highlight = base.brand
+// Colors
+var (
+	base100  = lipgloss.Color("#1d232a")
+	base200  = lipgloss.Color("#191e24")
+	base300  = lipgloss.Color("#15191e")
+	baseText = lipgloss.Color("#ecf9ff")
 
-	base.base = lipgloss.NewStyle().Foreground(base.body)
-	return base
-}
+	primary       = lipgloss.Color("#605dff")
+	primaryText   = lipgloss.Color("#edf1fe")
+	secondary     = lipgloss.Color("#f43098")
+	secondaryText = lipgloss.Color("#f9e4f0")
 
-func (b Theme) Body() lipgloss.TerminalColor {
-	return b.body
-}
+	accent      = lipgloss.Color("#00d3bb")
+	accentText  = lipgloss.Color("#084d49")
+	neutral     = lipgloss.Color("#09090b")
+	neutralText = lipgloss.Color("#e4e4e7")
 
-func (b Theme) Highlight() lipgloss.TerminalColor {
-	return b.highlight
-}
+	info        = lipgloss.Color("#00bafe")
+	infoText    = lipgloss.Color("#042e49")
+	success     = lipgloss.Color("#00d390")
+	successText = lipgloss.Color("#004c39")
 
-func (b Theme) Brand() lipgloss.TerminalColor {
-	return b.brand
-}
+	warning     = lipgloss.Color("#fcb700")
+	warningText = lipgloss.Color("#793205")
+	danger      = lipgloss.Color("#ff627d")
+	dangerText  = lipgloss.Color("#4d0218")
+)
 
-func (b Theme) Background() lipgloss.TerminalColor {
-	return b.background
-}
+var (
+	base100light  = lipgloss.Color("#ffffff")
+	base200light  = lipgloss.Color("#f8f8f8")
+	base300light  = lipgloss.Color("#eeeeee")
+	baseTextlight = lipgloss.Color("#18181b")
 
-func (b Theme) Accent() lipgloss.TerminalColor {
-	return b.accent
-}
+	primarylight       = lipgloss.Color("#422ad5")
+	primaryTextlight   = lipgloss.Color("#e0e7ff")
+	secondarylight     = lipgloss.Color("#f43098")
+	secondaryTextlight = lipgloss.Color("#f9e4f0")
+)
 
-func (b Theme) Base() lipgloss.Style {
-	return b.base
-}
+var baseStyle = lipgloss.NewStyle().
+	Foreground(lipgloss.AdaptiveColor{
+		Light: string(baseTextlight),
+		Dark:  string(baseText),
+	})
 
-func (b Theme) TextBody() lipgloss.Style {
-	return b.Base().Foreground(b.body)
-}
+var (
+	Text = baseStyle
+	// Hyperlink
+	Link = lipgloss.NewStyle().
+		Bold(true).
+		Underline(true).
+		Foreground(lipgloss.AdaptiveColor{
+			Light: string(primarylight),
+			Dark:  string(primary),
+		})
 
-func (b Theme) TextAccent() lipgloss.Style {
-	return b.Base().Foreground(b.accent)
-}
+	// Header
+	Header = baseStyle.
+		Padding(0, 1).
+		Bold(true).
+		Foreground(lipgloss.AdaptiveColor{
+			Light: string(primaryTextlight),
+			Dark:  string(primaryText),
+		}).
+		Background(lipgloss.AdaptiveColor{
+			Light: string(primarylight),
+			Dark:  string(primary),
+		})
 
-func (b Theme) TextHighlight() lipgloss.Style {
-	return b.Base().Foreground(b.highlight)
-}
+	// Highlight
+	Mark = baseStyle.
+		Padding(0, 1).
+		Foreground(warningText).
+		Background(warning)
 
-func (b Theme) TextBrand() lipgloss.Style {
-	return b.Base().Foreground(b.brand)
-}
+	// Italic
+	I = baseStyle.Italic(true)
 
-func (b Theme) TextError() lipgloss.Style {
-	return b.Base().Foreground(b.error)
-}
+	// Underline
+	U = baseStyle.Underline(true)
 
-func (b Theme) PanelError() lipgloss.Style {
-	return b.Base().Background(b.error).Foreground(b.accent)
-}
+	// Bold
+	B = baseStyle.Bold(true)
 
-func (b Theme) Border() lipgloss.TerminalColor {
-	return b.border
-}
+	// Strikethrough
+	S = baseStyle.Strikethrough(true)
+
+	// Tick
+	Tick = baseStyle.
+		Foreground(successText).
+		Render("✓")
+
+	// Cross
+	Cross = baseStyle.
+		Foreground(dangerText).
+		Render("✕")
+
+	// Bang
+	Bang = baseStyle.
+		Foreground(warningText).
+		Render("!")
+
+	// Text Colors
+	Base = lipgloss.NewStyle().
+		Foreground(lipgloss.AdaptiveColor{
+			Light: string(baseTextlight),
+			Dark:  string(baseText),
+		})
+
+	Primary = lipgloss.NewStyle().
+		Foreground(lipgloss.AdaptiveColor{
+			Light: string(primaryTextlight),
+			Dark:  string(primaryText),
+		})
+
+	Secondary = lipgloss.NewStyle().
+			Foreground(lipgloss.AdaptiveColor{
+			Light: string(secondaryTextlight),
+			Dark:  string(secondaryText),
+		})
+
+	Info    = lipgloss.NewStyle().Foreground(infoText)
+	Success = lipgloss.NewStyle().Foreground(successText)
+	Warning = lipgloss.NewStyle().Foreground(warningText)
+	Danger  = lipgloss.NewStyle().Foreground(dangerText)
+	Accent  = lipgloss.NewStyle().Foreground(accentText)
+	Neutral = lipgloss.NewStyle().Foreground(neutralText)
+
+	// Background Colors
+	Base100Background = Base.Background(lipgloss.AdaptiveColor{
+		Light: string(base100light),
+		Dark:  string(base100),
+	})
+	Base200Background = Base.Background(lipgloss.AdaptiveColor{
+		Light: string(base200light),
+		Dark:  string(base200),
+	})
+	Base300Background = Base.Background(lipgloss.AdaptiveColor{
+		Light: string(base300light),
+		Dark:  string(base300),
+	})
+	PrimaryBackground = Primary.Background(lipgloss.AdaptiveColor{
+		Light: string(primarylight),
+		Dark:  string(primary),
+	})
+	SecondaryBackground = Secondary.Background(lipgloss.AdaptiveColor{
+		Light: string(secondarylight),
+		Dark:  string(secondary),
+	})
+	InfoBackground    = Info.Background(info)
+	SuccessBackground = Success.Background(success)
+	WarningBackground = Warning.Background(warning)
+	DangerBackground  = Danger.Background(danger)
+	AccentBackground  = Accent.Background(accent)
+	NeutralBackground = Neutral.Background(neutral)
+
+	// Logging defines a PurpleClay themed [logging] style that supports both light and
+	// dark terminals
+	//
+	// [logging]: https://github.com/charmbracelet/log
+	Logging = &log.Styles{
+		Timestamp: baseStyle,
+		Caller:    baseStyle.Faint(true),
+		Prefix:    baseStyle.Bold(true).Faint(true),
+		Message:   baseStyle.MarginRight(2),
+		Key: baseStyle.
+			Foreground(lipgloss.AdaptiveColor{
+				Light: string(primarylight),
+				Dark:  string(primary),
+			}),
+		Value:     baseStyle,
+		Separator: baseStyle.Faint(true),
+		Levels: map[log.Level]lipgloss.Style{
+			log.DebugLevel: baseStyle.
+				SetString(Tick).
+				Bold(true).
+				MaxWidth(2),
+			log.InfoLevel: baseStyle.
+				SetString(Tick).
+				Bold(true).
+				MaxWidth(2),
+			log.WarnLevel: baseStyle.
+				SetString(Bang).
+				Bold(true).
+				MaxWidth(2),
+			log.ErrorLevel: baseStyle.
+				SetString(Cross).
+				Bold(true).
+				MaxWidth(2),
+			log.FatalLevel: baseStyle.
+				SetString(Cross).
+				Bold(true).
+				MaxWidth(2),
+		},
+		Keys: map[string]lipgloss.Style{
+			"err":   baseStyle.Foreground(danger),
+			"error": baseStyle.Foreground(danger),
+		},
+		Values: map[string]lipgloss.Style{},
+	}
+)

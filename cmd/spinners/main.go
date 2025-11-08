@@ -19,12 +19,10 @@ type model struct {
 	err      error
 }
 
-var themeStyles = theme.New()
-
 func newSpinner(spinnerType spinner.Spinner) spinner.Model {
 	s := spinner.New()
 	s.Spinner = spinnerType
-	s.Style = themeStyles.TextBrand()
+	s.Style = theme.Primary
 	return s
 }
 

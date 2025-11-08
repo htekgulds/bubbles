@@ -10,13 +10,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var themeStyles = theme.New()
-
 var (
-	focusedStyle  = themeStyles.TextAccent()
-	cursorStyle   = themeStyles.TextBrand()
-	focusedButton = themeStyles.TextBrand().Render("[ Submit ]")
-	buttonStyle   = fmt.Sprintf("%s %s", focusedButton, themeStyles.TextAccent().Render("enter"))
+	focusedStyle  = theme.Primary
+	cursorStyle   = theme.Accent
+	focusedButton = theme.PrimaryBackground.Render("[ Submit ]")
+	buttonStyle   = fmt.Sprintf("%s %s", focusedButton, theme.Base.Render("enter"))
 )
 
 type errMsg error
