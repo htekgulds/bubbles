@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/charmbracelet/fang"
+	"github.com/htekgulds/bubbles/cmd/commands"
 	"github.com/htekgulds/bubbles/cmd/spinners"
 	"github.com/htekgulds/bubbles/cmd/text"
 	"github.com/joho/godotenv"
@@ -41,6 +42,7 @@ func init() {
 
 	text.Init(rootCmd)
 	spinners.Init(rootCmd)
+	commands.Init(rootCmd)
 }
 
 func initConfig() {
